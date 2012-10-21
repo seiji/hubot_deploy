@@ -22,8 +22,10 @@
 
     "htmlparser"    : "1.7.6",
     "soupselect"    : "0.2.0",
-    "xml2js": "0.1.14",
-    "jsdom": "0.2.15"
+    "xml2js"        : "0.1.14",
+    "jsdom"         : "0.2.15",
+    "cron"          : "1.0.1",
+    "mongodb"       : "1.1.11"
   }
 }
 
