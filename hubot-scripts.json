@@ -1,4 +1,4 @@
-[ "tweet.coffee",
+[ 
   "9gag.coffee",
   "abstract.coffee",
   "ascii.coffee",
@@ -9,6 +9,5 @@
   "decide.coffee",
   "fml.coffee",
   "hashing.coffee",
-  "http-info.coffee",
-  "tweet-content.coffee"
+  "url.coffee"
 ]

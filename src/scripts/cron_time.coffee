@@ -6,7 +6,7 @@ module.exports = (robot) ->
     response.send msg
  
   # *(sec) *(min) *(hour) *(day) *(month) *(day of the week)
-  new cronJob('0 8 * * * *', () ->
+  new cronJob('0 1 * * * *', () ->
     currentTime = new Date
     console.log(process.env.HUBOT_IRC_ROOMS)
     send process.env.HUBOT_IRC_ROOMS, "current times is #{currentTime}"
