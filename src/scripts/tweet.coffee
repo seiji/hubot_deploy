@@ -24,7 +24,7 @@ module.exports = (robot) ->
 
         if tweets.results? and tweets.results.length > 0
           tweet  = msg.random tweets.results
-          msg.send "http://twitter.com/#!/#{tweet.from_user}/status/#{tweet.id_str}"
-          msg.send " #{tweet.text}"
+          msg.notice "http://twitter.com/#!/#{tweet.from_user}/status/#{tweet.id_str}"
+          msg.notice " #{tweet.text}"
         else
           msg.reply "No one is tweeting about that."

@@ -2,7 +2,7 @@ url     = require "url"
 mongodb = require "mongodb"
 
 module.exports = (robot) ->
-  info  = url.parse process.env.MONGO_URL || 'http://127.0.0.1:27017/pubsub'
+  info  = url.parse process.env.MONGO_URL        || 'http://127.0.0.1:27017/pubsub'
   server = new mongodb.Server(info.hostname, (Number) info.port, {})
   collection_name = process.env.MONGO_COLLECTION || 'messages' 
   

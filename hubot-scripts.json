@@ -9,5 +9,6 @@
   "decide.coffee",
   "fml.coffee",
   "hashing.coffee",
+  "tumblr.coffee",
   "url.coffee"
 ]

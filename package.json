@@ -25,7 +25,11 @@
     "xml2js"        : "0.1.14",
     "jsdom"         : "0.2.15",
     "cron"          : "1.0.1",
-    "mongodb"       : "1.1.11"
+    "mongodb"       : "1.1.11",
+    "iconv"         : "1.2.3",
+    "cheerio"       : "0.10.1",
+    "request"       : "1.2.0",
+    "node-icu-charset-detector": "0.0.3"
   }
 }
 
