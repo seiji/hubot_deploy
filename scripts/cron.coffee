@@ -14,8 +14,13 @@ module.exports = (robot) ->
           hackerNews.item(robot, itemID, (item) ->
             type = item.type
             if type not in ['comment', 'job', 'poll', 'pollopt']
-              robot.send {room: ROOM}, "[HN] #{item.title}\n- #{item.score} points #{item.url}"
+              robot.send {room: ROOM}, "[HN] #{item.title}\n- #{pad(item.score, 5)} points #{item.url}"
           )
     )
   )
   apiHN.start()
+
+pad = (val, length, padChar = '0') ->
+  val += ''
+  numPads = length - val.length
+  if (numPads > 0) then new Array(numPads + 1).join(padChar) + val else val
