@@ -1,7 +1,6 @@
 # Description
 #  cron jobs
 ROOM = "#test"
-API_HN_UPDATES = "https://hacker-news.firebaseio.com/v0/updates.json"
 
 cronJob = require('cron').CronJob
 hackerNews = require('../libs/hacker-news')
@@ -9,10 +8,16 @@ hackerNews = require('../libs/hacker-news')
 module.exports = (robot) ->
   # room = process.env.HUBOT_HIPCHAT_ROOMS_ANNOUNCE
   api_hn = new cronJob('*/5 * * * *', () =>
-    # envelope = room: ROOM
-    robot.http(API_HN_UPDATES).get() (err, res, body) ->
-      if (!err)
-        json = JSON.parse body
-        robot.send {room: ROOM}, "items #{json.items}"
+    hackerNews.updates(robot, (json) ->
+      for itemID in json.items
+        if not hackerNews.isRead(robot, itemID)
+          hackerNews.read(robot, itemID)
+          hackerNews.item(robot, itemID, (item) ->
+            type = item.type
+            if type not in ['comment']
+              robot.send {room: ROOM}, "item #{item.title}\n-#{item.url}"
+          )
+    )
   )
-  api_hn.start()
+  api_hn.start
+
