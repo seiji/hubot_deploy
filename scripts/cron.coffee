@@ -8,17 +8,21 @@ hackerNews = require('../libs/hacker-news')
 module.exports = (robot) ->
   apiHN = new cronJob('*/10 * * * *', () =>
     hackerNews.updates(robot, (json) ->
+      msgs = []
       async.each json.items, (itemID, cb) ->
         if not hackerNews.isRead(robot, itemID)
           hackerNews.read(robot, itemID)
           hackerNews.item(robot, itemID, (item) ->
             type = item.type
             if type not in ['comment', 'job', 'poll', 'pollopt']
-              robot.send {room: ROOM}, "[HN] #{item.title}\n- #{pad(item.score, 4, ' ')} points #{item.url}"
+              msgs.push " #{pad(item.score, 3, ' ')}pt [#{item.title}](#{item.url})"
             cb()
           )
       , (err) ->
-
+        if msgs.length > 0
+          robot.send {room: ROOM}, "HackerNews"
+          for msg in msgs
+            robot.send {room: ROOM}, msg
     )
   )
   apiHN.start()
