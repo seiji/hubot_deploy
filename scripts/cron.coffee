@@ -6,5 +6,8 @@ cron = require('cron').CronJob
 
 module.exports = (robot) ->
   # room = process.env.HUBOT_HIPCHAT_ROOMS_ANNOUNCE
-  new cron '* * * * *', () =>
-    robot.messageRoom ROOM, "cronテスト", null, true, TIMEZONE
+  test = new cron('* * * * *', () =>
+    envelope = room: ROOM
+    robot.send envelope, "ここにメッセージを突っ込みます。"
+  )
+  test.start()
