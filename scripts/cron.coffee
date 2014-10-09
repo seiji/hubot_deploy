@@ -1,12 +1,11 @@
 # Description
 #  cron jobs
-ROOM = "#test"
+ROOM = "#news"
 
 cronJob = require('cron').CronJob
 hackerNews = require('../libs/hacker-news')
 
 module.exports = (robot) ->
-  # room = process.env.HUBOT_HIPCHAT_ROOMS_ANNOUNCE
   apiHN = new cronJob('*/10 * * * *', () =>
     hackerNews.updates(robot, (json) ->
       for itemID in json.items
