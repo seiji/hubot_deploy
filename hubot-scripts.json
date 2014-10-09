@@ -1,1 +1,1 @@
-["redis-brain.coffee", "shipit.coffee", "uptime.coffee"]
+["heroku-status.coffee","redis-brain.coffee", "uptime.coffee"]
