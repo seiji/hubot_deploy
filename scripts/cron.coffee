@@ -6,7 +6,7 @@ cronJob = require('cron').CronJob
 hackerNews = require('../libs/hacker-news')
 
 module.exports = (robot) ->
-  apiHN = new cronJob('* * * * *', () =>
+  apiHN = new cronJob('*/10 * * * *', () =>
     hackerNews.updates(robot, (json) ->
       messages = []
       async.each json.items, (itemID, cb) ->
