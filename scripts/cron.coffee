@@ -7,15 +7,15 @@ hackerNews = require('../libs/hacker-news')
 
 module.exports = (robot) ->
   # room = process.env.HUBOT_HIPCHAT_ROOMS_ANNOUNCE
-  apiHN = new cronJob('* * * * *', () =>
+  apiHN = new cronJob('*/10 * * * *', () =>
     hackerNews.updates(robot, (json) ->
       for itemID in json.items
         if not hackerNews.isRead(robot, itemID)
           hackerNews.read(robot, itemID)
           hackerNews.item(robot, itemID, (item) ->
             type = item.type
-            if type not in ['comment']
-              robot.send {room: ROOM}, "#{item.title}\n-#{item.url}"
+            if type not in ['comment', 'poll']
+              robot.send {room: ROOM}, "#{item.title}\n- #{item.url}"
           )
     )
   )
