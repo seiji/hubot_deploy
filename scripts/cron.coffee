@@ -13,8 +13,8 @@ module.exports = (robot) ->
           hackerNews.read(robot, itemID)
           hackerNews.item(robot, itemID, (item) ->
             type = item.type
-            if type not in ['comment', 'poll']
-              robot.send {room: ROOM}, "#{item.title}\n- #{item.url}"
+            if type not in ['comment', 'job', 'poll', 'pollopt']
+              robot.send {room: ROOM}, "[HN] #{item.title}\n- #{item.score} points #{item.url}"
           )
     )
   )

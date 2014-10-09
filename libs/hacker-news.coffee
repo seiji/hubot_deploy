@@ -11,6 +11,8 @@ module.exports =
     robot.http(API_HN_ITEM + itemID + ".json").get() (err, res, body) ->
       if (!err)
         json = JSON.parse body
+        if not json.url
+          json.url = "https://news.ycombinator.com/item?id=#{json.id}"
         callback(json)
   read: (robot, itemID) ->
     sign = "hn_#{itemID}"
