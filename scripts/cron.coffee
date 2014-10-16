@@ -27,7 +27,6 @@ module.exports = (robot) ->
       , (err) ->
         if Object.keys(msgs).length > 0
           robot.send {room: ROOM}, "HackerNews"
-          keys = Object.keys(msgs)
           keys = Object.keys(msgs).sort (a, b) -> msgs[b].score - msgs[a].score
           for itemID in keys
             item = msgs[itemID]
