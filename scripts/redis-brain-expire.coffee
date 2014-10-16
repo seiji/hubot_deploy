@@ -37,16 +37,16 @@ module.exports = (robot) ->
             if err
               callback err
             else
-              callback null, { key: postKey, value:value }
+              callback null, { k: postKey, v:value }
         , (err, postList) ->
           if err
             throw err
           data = {}
           for post in postList
-            key   = post['key']
-            value = post['value']
+            key   = post['k']
+            value = post['v']
             key = key.replace("#{prefix}:storage:", "")
-            data[key] = { value: value, expire: 0 }
+            data[key] = { v: value, e: 0 }
           robot.brain.mergeData data
       else
         robot.logger.info "Initializing new data for #{prefix} brain"
@@ -70,12 +70,12 @@ module.exports = (robot) ->
   robot.brain.on 'save', (data = {}) ->
     for k,v of data
       if k != 'users' && k != '_private'
-        value  = v['value']
-        expire = v['expire']
+        value  = v['v']
+        expire = v['e']
         if expire > 0
           setKey = "#{prefix}:storage:#{k}"
           client.setex setKey, expire, value
-          data[k] = { value: value, expire: 0 }
+          data[k] = { v: value, e: 0 }
 
   robot.brain.on 'close', ->
     client.quit()

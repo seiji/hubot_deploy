@@ -22,7 +22,7 @@ module.exports =
         callback json
   read: (robot, itemID) ->
     sign = "hn_#{itemID}"
-    robot.brain.data[sign] = { value: 1, expire: 3600 * 24 }
+    robot.brain.data[sign] = { v: 1, e: 3600 * 24 }
     robot.brain.save()
 
   isRead: (robot, itemID) ->
