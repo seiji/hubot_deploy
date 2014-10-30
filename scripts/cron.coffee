@@ -1,6 +1,7 @@
 # Description
 #  cron jobs
 ROOM = "#news"
+LIMIT = 10
 async = require('async')
 cronJob = require('cron').CronJob
 hackerNews = require('../libs/hacker-news')
@@ -8,11 +9,11 @@ hackerNews = require('../libs/hacker-news')
 module.exports = (robot) ->
   # apiHN = new cronJob('*/10 * * * *', () =>
   apiHN = new cronJob('0 * * * *', () =>
-    hackerNews.topstories(robot, (json) ->
-      msgs = {}
-      countItem = 0
-      async.eachSeries json, (itemID, next) ->
-        if not hackerNews.isRead(robot, itemID) and (countItem < 20)
+    msgs = {}
+    countItem = 0
+    hackerNews.topstories(robot, (itemIDList) ->
+      async.forEach itemIDList, (itemID, next) ->
+        if not hackerNews.isRead(robot, itemID) and (countItem < LIMIT)
           hackerNews.item(robot, itemID, (item) ->
             type = item.type
             if type not in ['comment', 'job', 'poll', 'pollopt'] and (item.score > 0)
@@ -26,12 +27,12 @@ module.exports = (robot) ->
           next()
       , (err) ->
         if Object.keys(msgs).length > 0
-          robot.send {room: ROOM}, "HackerNews"
+          robot.send {room: ROOM}, "# HackerNews -----"
           keys = Object.keys(msgs).sort (a, b) -> msgs[b].score - msgs[a].score
           for itemID in keys
             item = msgs[itemID]
             hackerNews.read(robot, itemID)
-            robot.send {room: ROOM}, " #{pad(item.score, 3, ' ')}pt [#{item.title}](#{item.url})"
+            robot.send {room: ROOM}, " #{pad(item.score, 3, ' ')}pt [#{item.title}](#{item.url} )"
     )
   )
   apiHN.start()
